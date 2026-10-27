@@ -51,10 +51,23 @@ class Epias:
             raise SystemExit(f"EPİAŞ girişi başarısız (HTTP {response.status_code}). Kullanıcı/şifre secret'larını kontrol edin.")
         self.tgt = text
 
+    MIN_INTERVAL = 0.9  # EPİAŞ sınırı: dakikada 80 istek
+
     def post(self, path: str, body: dict) -> dict:
-        response = self.session.post(BASE_URL + path, json=body, timeout=TIMEOUT,
-                                     headers={"Content-Type": "application/json", "Accept": "application/json",
-                                              "TGT": self.tgt})
+        import time
+
+        for attempt in range(4):
+            wait = self.MIN_INTERVAL - (time.monotonic() - getattr(self, "_last", 0.0))
+            if wait > 0:
+                time.sleep(wait)
+            self._last = time.monotonic()
+            response = self.session.post(BASE_URL + path, json=body, timeout=TIMEOUT,
+                                         headers={"Content-Type": "application/json", "Accept": "application/json",
+                                                  "TGT": self.tgt})
+            if response.status_code != 429:
+                break
+            print("  EPİAŞ istek sınırı; 65 sn bekleniyor…")
+            time.sleep(65)
         if response.status_code not in (200, 201):
             raise RuntimeError(f"EPİAŞ HTTP {response.status_code}: {response.text[:200]}")
         return response.json()
