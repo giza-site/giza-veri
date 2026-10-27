@@ -1,0 +1,40 @@
+name: Veri yayini
+
+on:
+  schedule:
+    - cron: "40 11 * * *"   # 14:40 (TSİ) - ertesi günün PTF'si
+    - cron: "10 14 * * *"   # 17:10 (TSİ) - geç yayın için ikinci deneme
+    - cron: "20 4 * * *"    # 07:20 (TSİ) - ay başı ve YEKDEM
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: veri
+  cancel-in-progress: false
+
+jobs:
+  yayinla:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests==2.32.3
+      - name: EPİAŞ verilerini çek ve imzala
+        run: python yayinci/yayinla.py
+        env:
+          EPIAS_KULLANICI: ${{ secrets.EPIAS_KULLANICI }}
+          EPIAS_SIFRE: ${{ secrets.EPIAS_SIFRE }}
+          GIZA_VERI_ANAHTAR: ${{ secrets.GIZA_VERI_ANAHTAR }}
+      - name: Depoya kaydet
+        run: |
+          git config user.name "giza-veri"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add veri
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -m "Veri $(TZ=Europe/Istanbul date +'%Y-%m-%d %H:%M')"
+          git push
