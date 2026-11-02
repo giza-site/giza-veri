@@ -65,8 +65,9 @@
   "veri/ptf/gunluk/2026-10-31.json": "d41203d9efaabaca3af2e383dfa201d414315fa464115ae06a3abeb7fc8edafc",
   "veri/ptf/gunluk/2026-11-01.json": "01fada49f906ad6a7a7763c1e3aa00e3cc0379ac4ea64931573d257839c7d58d",
   "veri/ptf/gunluk/2026-11-02.json": "dbfefb351eb121de138b7e49c5cef1c505656e8d594ad42b30a679c49c8cfa13",
+  "veri/ptf/gunluk/2026-11-03.json": "6b77501578e65107c53dc229622e73fb57d2da626ea1cdf4135c9c9868413f66",
   "veri/yekdem.json": "5e37819467e196d64b3a5461a9606f69765ec1d2c4be4203cf3af3be503d8718"
  },
- "generated_at": "2026-11-01T21:52:50+03:00",
+ "generated_at": "2026-11-02T15:34:35+03:00",
  "schema": 1
 }
