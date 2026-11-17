@@ -13,7 +13,7 @@ for start, end in (((2026, 8, 1), (2026, 11, 1)),):
     for it in items(payload):
         print(json.dumps(it, ensure_ascii=False))
     print("RAW", json.dumps(payload, ensure_ascii=False)[:3000])
-for path in ("/v1/renewables/data/unit-cost-realized", "/v1/renewables/data/realized-unit-cost"):
+for path in ("/electricity-service/v1/renewables/data/unit-cost-realized", "/electricity-service/v1/renewables/data/realized-unit-cost"):
     try:
         print(path, json.dumps(client.post(path, {"startDate": iso(datetime(2026, 9, 1)), "endDate": iso(datetime(2026, 9, 1))}), ensure_ascii=False)[:800])
     except Exception as exc:
