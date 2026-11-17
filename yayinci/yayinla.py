@@ -177,8 +177,9 @@ def fetch_yekdem(client: Epias, year: int, month: int) -> dict | None:
                     continue
             except ValueError:
                 pass
-        candidate = {"unit_cost": str(Decimal(str(cost))), "version": version}
-        if best is None or version_rank(version) >= version_rank(best["version"]):
+        # Gerçekleşen YEKDEM = dönemin İLK yayımlanan sürümü (sonraki düzeltme sürümleri değil).
+        candidate = {"unit_cost": str(Decimal(str(cost))), "version": version, "secim": "ilk"}
+        if best is None or version_rank(version) < version_rank(best["version"]):
             best = candidate
     return best
 
@@ -253,8 +254,8 @@ def main() -> None:
     recent = list(months_between(FIRST_MONTH, (today.year, today.month)))[-4:]
     for year, month in months_between(FIRST_MONTH, (today.year, today.month)):
         key = f"{year:04d}-{month:02d}"
-        if key in table and (year, month) not in recent:
-            continue
+        if key in table and table[key].get("secim") == "ilk" and (year, month) not in recent:
+            continue  # eski (son sürüm seçilmiş) kayıtlar bir kez yeniden çekilir
         try:
             value = fetch_yekdem(client, year, month)
         except Exception as exc:
