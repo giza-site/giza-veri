@@ -1,5 +1,6 @@
 {
  "files": {
+  "veri/masaustu_lisans.json": "d8cda9182400e7348f08d8469e68a4c02b4a5b00c981ae2a18a9beee4e4cabca",
   "veri/mobil_lisans.json": "8be3d8cfa8ec000212eaf128ac23acd31acb31f540d3840d80d9678a1dcc8849",
   "veri/ptf/aylik/2022-01.json": "9fa4dea537d6c74a86eb74e61536fad153e1b70cd39d29f3f13964cfb29f8bc6",
   "veri/ptf/aylik/2022-02.json": "6934641142699177d2ccf999e05970580f22ae227e40ce4f0e96ebcfa8e1af85",
@@ -93,6 +94,6 @@
   "veri/ptf/gunluk/2026-11-27.json": "a9bbb612ca45e27ba6eb0550e5dc0c22b004180411eb0a758e6517ee7222e1df",
   "veri/yekdem.json": "cce2a5d45e8762580e45ada8963ecdc6c12493f9be5573cab8ef2185a41e9bb0"
  },
- "generated_at": "2026-11-26T16:59:02+03:00",
+ "generated_at": "2026-11-26T23:30:03+03:00",
  "schema": 1
 }
